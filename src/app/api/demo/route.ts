@@ -22,13 +22,32 @@ export async function POST(req: NextRequest) {
   }
 
   // 2. Origin validation
-  const allowedOriginsEnv = process.env.ALLOWED_ORIGINS || "http://localhost:3000,http://127.0.0.1:3000";
-  const allowedOrigins = allowedOriginsEnv
+  const defaultOrigins = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://vidyaloom.com",
+    "https://www.vidyaloom.com",
+  ];
+  if (process.env.NEXT_PUBLIC_SITE_URL) {
+    try {
+      const url = new URL(process.env.NEXT_PUBLIC_SITE_URL);
+      defaultOrigins.push(url.origin);
+    } catch {}
+  }
+  const allowedOriginsEnv = process.env.ALLOWED_ORIGINS || "";
+  const extraOrigins = allowedOriginsEnv
     .split(",")
     .map((o) => o.trim())
     .filter(Boolean);
+  const allowedOrigins = Array.from(new Set([...defaultOrigins, ...extraOrigins]));
 
-  if (origin && !allowedOrigins.includes(origin)) {
+  const isCloudflarePreview =
+    origin &&
+    (origin.endsWith(".pages.dev") ||
+      origin.endsWith(".workers.dev") ||
+      origin.endsWith(".vercel.app"));
+
+  if (origin && !allowedOrigins.includes(origin) && !isCloudflarePreview) {
     console.warn(`[Security] Rejected request from unauthorized origin: ${origin}`);
     return NextResponse.json(
       { success: false, message: "Cross-origin request rejected." },

@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   title: "Vidyaloom — Smarter Schools, Brighter Futures.",
   description:
     "End-to-end technology, training, and transformation solutions for schools and colleges.",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://vidyaloom.com"),
   alternates: {
     canonical: "/",
   },
