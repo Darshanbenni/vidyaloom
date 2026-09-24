@@ -12,6 +12,7 @@
   },
   "vars": {
     "NEXT_PUBLIC_SITE_URL": "https://vidyaloom.com",
+    "EMAIL_FROM": "Vidyaloom <contact@vidyaloom.com>",
     "LEADS_TO_EMAIL": "vidyaloomhq@gmail.com",
     "ALLOWED_ORIGINS": "https://vidyaloom.com,https://www.vidyaloom.com"
   }
