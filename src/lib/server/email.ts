@@ -24,7 +24,8 @@ export async function sendLeadNotificationEmail(
 ): Promise<{ success: boolean; messageId?: string; error?: string }> {
   const apiKey = process.env.RESEND_API_KEY;
   const fromEmail = process.env.EMAIL_FROM || "Vidyaloom Website <onboarding@resend.dev>";
-  const toEmail = process.env.LEADS_TO_EMAIL || "vidyaloomhq@gmail.com";
+  const isTestingSender = fromEmail.includes("onboarding@resend.dev");
+  const toEmail = isTestingSender ? "darshanbenni@gmail.com" : (process.env.LEADS_TO_EMAIL || "vidyaloomhq@gmail.com");
 
   // Build sanitized subject
   const requestTypeLabel =
